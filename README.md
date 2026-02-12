@@ -44,7 +44,6 @@ AIOOP.org is designed with the needs of elderly pensioners in mind, offering acc
 **Font Size Adjustment** - An adjustable font size feature is readily available in the navigation bar, enabling users to increase or decrease text size according to their visual requirements. This functionality:
 - Increases readability for users with visual impairments
 - Applies consistently across all website sections
-- Maintains layout integrity at all font sizes
 
 **Consistent Navigation Placement** - Both the language toggle and font size controls are visually positioned in the top navigation bar, ensuring they remain visible and accessible from every page. This placement eliminates the need for users to search for these options and makes the website more approachable for elderly users.
 
