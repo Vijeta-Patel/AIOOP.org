@@ -3,14 +3,48 @@ import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import PageHeader from '@/components/PageHeader';
 
+
 export default function Contact() {
   const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
+const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+const [message, setMessage] = useState("");
+const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("email", email);
+  formData.append("message", message);
+
+  try {
+    const response = await fetch("/api/contact.php", {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.text();
+
+    if (result.trim() === "success") {
+      setSubmitted(true);
+      setName("");
+      setEmail("");
+      setMessage("");
+    } else {
+      alert("Something went wrong. Please try again.");
+    }
+  } catch (error) {
+    alert("Server error. Please try later.");
+  }
+
+  setLoading(false);
+};
+
 
   return (
     <div className="container mx-auto px-4 lg:px-8">
