@@ -31,7 +31,8 @@ export const translations = {
       viewHealthcare: 'View healthcare facilities',
       upcomingEvents: 'Upcoming Events',
       joinGathering: 'Join our next gathering',
-    },
+      memberListPdf: "View Full Member List (PDF)",
+     },
     activities: {
       title: "Organization Activities",
       desc: "Free services provided to pensioners by the organization",
@@ -138,6 +139,7 @@ export const translations = {
       medicalSupport: 'चिकित्सा सहायता',
       viewHealthcare: 'स्वास्थ्य सुविधाएँ देखें',
       upcomingEvents: 'आगामी कार्यक्रम',
+      memberListPdf: "सदस्यों की पूर्ण सूची देखें (PDF)",
       joinGathering: 'हमारी अगली बैठक में शामिल हों',
     },
     activities: {
