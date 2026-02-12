@@ -67,22 +67,28 @@ const [loading, setLoading] = useState(false);
                 <input
                   type="text"
                   required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground text-body-md focus:outline-none focus:ring-2 focus:ring-ring"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">{t.contact.email}</label>
                 <input
-                  type="email"
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground text-body-md focus:outline-none focus:ring-2 focus:ring-ring"
-                />
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground text-body-md focus:outline-none focus:ring-2 focus:ring-ring"
+              />
               </div>
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">{t.contact.message}</label>
                 <textarea
                   required
                   rows={5}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground text-body-md focus:outline-none focus:ring-2 focus:ring-ring resize-none"
                 />
               </div>
