@@ -52,7 +52,7 @@ export default function Index() {
                   <p className="text-sm text-muted-foreground mt-1 uppercase tracking-wider">{t.home.yearsService}</p>
                 </div>
                 <div className="bg-card rounded-xl p-6 shadow-soft text-center min-w-[140px]">
-                  <span className="font-display font-bold text-3xl text-foreground">200+</span>
+                  <span className="font-display font-bold text-3xl text-foreground">500+</span>
                   <p className="text-sm text-muted-foreground mt-1 uppercase tracking-wider">{t.home.members}</p>
                 </div>
               </div>
