@@ -3,13 +3,29 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import PageHeader from '@/components/PageHeader';
 
 const members = [
-  { name: 'Mr. R.K. Sharma', nameHi: 'श्री आर.के. शर्मा', role: 'President', roleHi: 'अध्यक्ष', phone: '9876543210' },
-  { name: 'Mrs. S. Gupta', nameHi: 'श्रीमती एस. गुप्ता', role: 'Secretary', roleHi: 'सचिव', phone: '9876543211' },
-  { name: 'Mr. A. Singh', nameHi: 'श्री ए. सिंह', role: 'Treasurer', roleHi: 'कोषाध्यक्ष', phone: '9876543212' },
-  { name: 'Ms. L. Verma', nameHi: 'सुश्री एल. वर्मा', role: 'Executive Member', roleHi: 'कार्यकारी सदस्य', phone: '' },
-  { name: 'Mr. P. Patel', nameHi: 'श्री पी. पटेल', role: 'Executive Member', roleHi: 'कार्यकारी सदस्य', phone: '' },
-  { name: 'Mrs. K. Desai', nameHi: 'श्रीमती के. देसाई', role: 'Executive Member', roleHi: 'कार्यकारी सदस्य', phone: '' },
+  { name: 'Vinod Kumar Gupta', nameHi: 'विनोद कुमार गुप्ता', role: 'President', roleHi: 'अध्यक्ष', phone: '9415486514' },
+  { name: 'P.P. Dixit', nameHi: 'पी०पी० दीक्षित', role: 'Vice President', roleHi: 'उपाध्यक्ष', phone: '9415486514' },
+  { name: 'R.N. Srivastava', nameHi: 'आर०एन० श्रीवास्तव', role: 'Vice President', roleHi: 'उपाध्यक्ष', phone: '9369253458' },
+  { name: 'Om Prakash Srivastava', nameHi: 'ओम प्रकाश श्रीवास्तव', role: 'General Secretary', roleHi: 'महासचिव', phone: '9415477344' },
+  { name: 'Ram Khilawan Vishwakarma', nameHi: 'राम खिलावन विश्वकर्मा', role: 'Finance Secretary', roleHi: 'वित्त सचिव', phone: '7388620019' },
+  { name: 'B.P. Singh', nameHi: 'बी०पी० सिंह', role: 'Administrative Secretary', roleHi: 'प्रशासनिक सचिव', phone: '6393805598' },
+  { name: 'Satish Prakash', nameHi: 'सतीश प्रकाश', role: 'PRO', roleHi: 'पी०आर०ओ०', phone: '9653049184' },
+  { name: 'Surendra Kumar Mishra', nameHi: 'सुरेन्द्र कुमार मिश्रा', role: 'Auditor', roleHi: 'ऑडिटर', phone: '9415438164' },
+  { name: 'Kamal Kumar Verma', nameHi: 'कमल कुमार वर्मा', role: 'Accountant', roleHi: 'लेखाकार', phone: '9415040505' },
+  { name: 'Masood Ahmad Alvi', nameHi: 'मसूद अहमद अल्वी', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '8318652010' },
+  { name: 'Dr. Rakesh Kumar', nameHi: 'डा० राकेश कुमार', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '9415440871' },
+  { name: 'Anirudh Singh', nameHi: 'अनिरूद्ध सिंह', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '9415796440' },
+  { name: 'V.K. Singh', nameHi: 'वी०के० सिंह', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '9918555523' },
+  { name: 'Vijay Anand Dariyabadi', nameHi: 'विजय आनन्द दरियाबादी', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '8081924191' },
+  { name: 'Surendra Kumar Shukla', nameHi: 'सुरेन्द्र कुमार शुक्ला', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '9411663190' },
+  { name: 'Shyam Kumar Sinha', nameHi: 'श्याम कुमार सिन्हा', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '8318262415' },
+  { name: 'Vijay Kumar Tiwari', nameHi: 'विजय कुमार तिवारी', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '9450124662' },
+  { name: 'Purushottam Narayan Mishra', nameHi: 'पुरूषोत्तम नारायण मिश्रा', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '9415478055' },
+  { name: 'Swaroop Narayan Nigam', nameHi: 'स्वरूप नारायण निगम', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '9453287576' },
+  { name: 'Baljeet Singh', nameHi: 'बलजीत सिंह', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '9621048266' },
+  { name: 'Rajeev Pradhan', nameHi: 'राजीव प्रधान', role: 'Executive Member', roleHi: 'सदस्य कार्यकारिणी', phone: '9450138009' },
 ];
+
 
 export default function Committee() {
   const { language, t } = useLanguage();
