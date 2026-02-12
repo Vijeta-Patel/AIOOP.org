@@ -6,12 +6,13 @@ export default function Activities() {
   const { t } = useLanguage();
 
   const activities = [
-    { icon: Briefcase, title: t.activities.pensionAssistance, desc: t.activities.pensionDesc },
-    { icon: Users, title: t.activities.grievanceSupport, desc: t.activities.grievanceDesc },
-    { icon: Heart, title: t.activities.healthAwareness, desc: t.activities.healthDesc },
-    { icon: CalendarDays, title: t.activities.socialGatherings, desc: t.activities.socialDesc },
-    { icon: Scale, title: t.activities.legalAid, desc: t.activities.legalDesc },
-    { icon: Heart, title: t.activities.yogaWellness, desc: t.activities.yogaDesc },
+    { icon: Briefcase, title: t.activities.service1, desc: t.activities.service1Desc },
+    { icon: Users, title: t.activities.service2, desc: t.activities.service2Desc },
+    { icon: Heart, title: t.activities.service3, desc: t.activities.service3Desc },
+    { icon: CalendarDays, title: t.activities.service4, desc: t.activities.service4Desc },
+    { icon: Scale, title: t.activities.service5, desc: t.activities.service5Desc },
+    { icon: Heart, title: t.activities.service6, desc: t.activities.service6Desc },
+    { icon: Users, title: t.activities.service7, desc: t.activities.service7Desc },
   ];
 
   return (

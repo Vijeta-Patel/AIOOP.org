@@ -33,23 +33,34 @@ export const translations = {
       joinGathering: 'Join our next gathering',
     },
     activities: {
-      title: 'Our Activities',
-      desc: 'We organize regular events, workshops, and gatherings to keep our community active and engaged.',
-      pensionAssistance: 'Pension Assistance',
-      pensionDesc: 'Helping retirees navigate pension paperwork and resolve delays.',
-      grievanceSupport: 'Grievance Support',
-      grievanceDesc: 'Support for addressing grievances with government departments.',
-      healthAwareness: 'Health Awareness',
-      healthDesc: 'Regular health check-up camps and awareness programs.',
-      socialGatherings: 'Social Gatherings',
-      socialDesc: 'Monthly get-togethers, festivals, and cultural programs.',
-      legalAid: 'Legal Aid',
-      legalDesc: 'Free legal consultation for pension and retirement matters.',
-      yogaWellness: 'Yoga & Wellness',
-      yogaDesc: 'Weekly yoga sessions and wellness workshops for seniors.',
-      regularSchedule: 'Regular Schedule',
-      communityHall: 'Community Hall',
+      title: "Organization Activities",
+      desc: "Free services provided to pensioners by the organization",
+
+      service1: "Life Certificate Assistance",
+      service1Desc: "Preparation of Life Certificates for pensioners and forwarding them to the concerned departments.",
+
+      service2: "Home Visit for Sick & Disabled Pensioners",
+      service2Desc: "Home visits for preparing Life Certificates of sick and disabled pensioners.",
+
+      service3: "Ayushman Card Assistance (70+)",
+      service3Desc: "Assistance in preparation of Ayushman Cards for pensioners above 70 years.",
+
+      service4: "Cashless Medical Card Support",
+      service4Desc: "Preparation of Pandit Deen Dayal Upadhyay State Employee Cashless Medical Cards.",
+
+      service5: "Treasury ID Card Coordination",
+      service5Desc: "Coordination with Kanpur Treasury for issuance of pensioner ID cards.",
+
+      service6: "Medical Reimbursement Documentation",
+      service6Desc: "Assistance in documentation and processing of medical reimbursement claims.",
+
+      service7: "Health Checkup Camps",
+      service7Desc: "Organizing regular health check-up camps for pensioners.",
+
+      regularSchedule: "Regularly Available",
+      communityHall: "Organization Office / Kanpur Treasury",
     },
+
     notices: {
       title: 'Notices & Updates',
       desc: 'Stay informed about the latest news, meetings, and important announcements.',
@@ -130,23 +141,34 @@ export const translations = {
       joinGathering: 'हमारी अगली बैठक में शामिल हों',
     },
     activities: {
-      title: 'हमारी गतिविधियाँ',
-      desc: 'हम अपने समुदाय को सक्रिय और जुड़ा रखने के लिए नियमित कार्यक्रम, कार्यशालाएँ और सभाएँ आयोजित करते हैं।',
-      pensionAssistance: 'पेंशन सहायता',
-      pensionDesc: 'पेंशन कागजी कार्रवाई और देरी को हल करने में सेवानिवृत्तों की मदद।',
-      grievanceSupport: 'शिकायत समर्थन',
-      grievanceDesc: 'सरकारी विभागों के साथ शिकायतों को संबोधित करने में सहायता।',
-      healthAwareness: 'स्वास्थ्य जागरूकता',
-      healthDesc: 'नियमित स्वास्थ्य जांच शिविर और जागरूकता कार्यक्रम।',
-      socialGatherings: 'सामाजिक सभाएँ',
-      socialDesc: 'मासिक मिलन, त्योहार और सांस्कृतिक कार्यक्रम।',
-      legalAid: 'कानूनी सहायता',
-      legalDesc: 'पेंशन और सेवानिवृत्ति मामलों के लिए मुफ्त कानूनी परामर्श।',
-      yogaWellness: 'योग और कल्याण',
-      yogaDesc: 'वरिष्ठ नागरिकों के लिए साप्ताहिक योग सत्र और कल्याण कार्यशालाएँ।',
-      regularSchedule: 'नियमित कार्यक्रम',
-      communityHall: 'सामुदायिक हॉल',
+      title: "संस्था की गतिविधियाँ",
+      desc: "संस्था द्वारा पेंशनरों को उपलब्ध कराई जाने वाली निशुल्क सुविधाएँ",
+
+      service1: "जीवन प्रमाण पत्र सहायता",
+      service1Desc: "पेंशनरों के जीवन प्रमाण पत्र बनवाना एवं उन्हें संबंधित विभागों को प्रेषित करना।",
+
+      service2: "अशक्त एवं बीमार पेंशनरों हेतु गृह सेवा",
+      service2Desc: "अशक्त एवं बीमार पेंशनरों के निवास स्थान पर जाकर जीवन प्रमाण पत्र बनाना।",
+
+      service3: "70 वर्ष से अधिक आयु वालों हेतु आयुष्मान कार्ड",
+      service3Desc: "70 वर्ष से ऊपर के पेंशनरों के आयुष्मान कार्ड बनवाने में सहायता।",
+
+      service4: "कैशलेस चिकित्सा कार्ड सहायता",
+      service4Desc: "पंडित दीन दयाल उपाध्याय राज्य कर्मचारी कैशलेस चिकित्सा कार्ड बनवाना।",
+
+      service5: "कोषागार परिचय पत्र सहायता",
+      service5Desc: "कानपुर कोषागार से समन्वय कर पेंशनरों का परिचय पत्र (आई कार्ड) बनवाना।",
+
+      service6: "चिकित्सा प्रतिपूर्ति दस्तावेजीकरण",
+      service6Desc: "चिकित्सा प्रतिपूर्ति के दावों का दस्तावेजीकरण कराना।",
+
+      service7: "स्वास्थ्य परीक्षण शिविर",
+      service7Desc: "पेंशनरों के स्वास्थ्य परीक्षण हेतु नियमित शिविरों का आयोजन।",
+
+      regularSchedule: "नियमित रूप से उपलब्ध",
+      communityHall: "संस्था कार्यालय / कानपुर कोषागार",
     },
+
     notices: {
       title: 'सूचनाएँ और अपडेट',
       desc: 'नवीनतम समाचार, बैठकों और महत्वपूर्ण घोषणाओं के बारे में सूचित रहें।',
