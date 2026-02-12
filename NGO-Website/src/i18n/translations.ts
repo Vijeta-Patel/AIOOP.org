@@ -32,6 +32,7 @@ export const translations = {
       upcomingEvents: 'Upcoming Events',
       joinGathering: 'Join our next gathering',
       memberListPdf: "View Full Member List (PDF)",
+      medicalReimbursementPdf: "Medical Reimbursement Form (PDF)",
      },
     activities: {
       title: "Organization Activities",
@@ -140,6 +141,7 @@ export const translations = {
       viewHealthcare: 'स्वास्थ्य सुविधाएँ देखें',
       upcomingEvents: 'आगामी कार्यक्रम',
       memberListPdf: "सदस्यों की पूर्ण सूची देखें (PDF)",
+      medicalReimbursementPdf: "चिकित्सा प्रतिपूर्ति फॉर्म (PDF)",
       joinGathering: 'हमारी अगली बैठक में शामिल हों',
     },
     activities: {

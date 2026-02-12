@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileText, HeartPulse, CalendarDays } from 'lucide-react';
+import { ArrowRight, FileText, HeartPulse, CalendarDays, Download } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 export default function Index() {
@@ -19,20 +19,30 @@ export default function Index() {
               <p className="mt-8 text-body-lg text-muted-foreground max-w-xl leading-relaxed">
                 {t.home.heroDesc}
               </p>
-              <div className="mt-10 flex flex-wrap gap-4">
+              <div className="mt-10 flex flex-wrap gap-4 items-center">
                 <Link
                   to="/activities"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-primary-foreground font-medium text-body-md hover:opacity-90 transition-opacity"
+                  className="inline-flex items-center justify-center w-56 whitespace-nowrap gap-2 py-3 rounded-full bg-primary text-primary-foreground font-medium text-body-md hover:opacity-90 transition-opacity"
                 >
                   {t.home.viewActivities}
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center px-8 py-4 rounded-full border border-border text-foreground font-medium text-body-md hover:bg-muted transition-colors"
+                  className="inline-flex items-center justify-center w-56 whitespace-nowrap gap-2 py-3 rounded-full border-2 border-primary/60 text-foreground font-medium text-body-md hover:bg-primary/5 transition-colors"
                 >
                   {t.home.contactUs}
                 </Link>
+                <a
+                  href="/Medicalform.pdf"
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-[448px] whitespace-nowrap gap-2 py-3 rounded-full border-2 border-primary/60 text-foreground font-medium text-body-md hover:bg-primary/5 transition-colors"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  {t.home.medicalReimbursementPdf}
+                </a>
               </div>
             </div>
           </div>
