@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, Sun, Moon, Globe, AArrowUp, AArrowDown } from 'lucide-react';
+import { Menu, X, Phone, Sun, Moon, Globe } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { useTheme } from '@/hooks/useTheme';
 import { useFontSize } from '@/hooks/useFontSize';
@@ -71,18 +71,18 @@ export default function Navbar() {
               <span className="sr-only">Language</span>
             </button>
             <button
-              onClick={decrease}
-              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-              aria-label="Decrease font size"
-            >
-              <AArrowDown className="w-5 h-5" />
-            </button>
-            <button
               onClick={increase}
               className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
               aria-label="Increase font size"
             >
-              <AArrowUp className="w-5 h-5" />
+              <span className="font-medium">A+</span>
+            </button>
+            <button
+              onClick={decrease}
+              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              aria-label="Decrease font size"
+            >
+              <span className="font-medium">A-</span>
             </button>
             <button
               onClick={toggleTheme}
