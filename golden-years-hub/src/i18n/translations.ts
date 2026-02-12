@@ -11,8 +11,8 @@ export const translations = {
       gallery: 'Gallery',
       contact: 'Contact',
       help: 'Help',
-      orgName: 'Baroda Association',
-      tagline: 'Serving Pensioners Since 1995',
+      orgName: 'AIOOP',
+      tagline: 'All India Organization of Pensioners',
     },
     home: {
       heroTitle1: 'Honoring Experience,',
@@ -108,8 +108,8 @@ export const translations = {
       gallery: 'गैलरी',
       contact: 'संपर्क',
       help: 'सहायता',
-      orgName: 'बड़ौदा एसोसिएशन',
-      tagline: '1995 से पेंशनभोगियों की सेवा में',
+      orgName: 'एआईओओपी',
+      tagline: 'ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स',
     },
     home: {
       heroTitle1: 'अनुभव का सम्मान,',

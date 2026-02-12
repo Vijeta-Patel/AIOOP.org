@@ -4,6 +4,8 @@ import { Menu, X, Phone, Sun, Moon, Globe, AArrowUp, AArrowDown } from 'lucide-r
 import { useLanguage } from '@/i18n/LanguageContext';
 import { useTheme } from '@/hooks/useTheme';
 import { useFontSize } from '@/hooks/useFontSize';
+import logo from "@/assets/logo.png";
+
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -30,9 +32,11 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-display font-bold text-lg">BA</span>
-            </div>
+            <img
+                src={logo}
+                alt="AIOOP Logo"
+                className="h-16 w-auto"
+              />
             <div>
               <h1 className="font-display font-bold text-xl text-primary leading-tight">{t.nav.orgName}</h1>
               <p className="text-sm text-muted-foreground">{t.nav.tagline}</p>

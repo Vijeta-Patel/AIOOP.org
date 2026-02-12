@@ -14,9 +14,11 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Playfair Display"', 'Georgia', 'serif'],
-        body: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+        display: ["Poppins", "sans-serif"],
+        body: ["Inter", "sans-serif"],
       },
+
+
       fontSize: {
         'display-xl': ['3.5rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
         'display-lg': ['2.75rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
