@@ -10,39 +10,45 @@ export default function Index() {
         {/* Hero */}
         <section className="bg-gradient-to-br from-accent via-background to-accent/50 py-20 lg:py-32">
           <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-3xl">
-              <h1 className="font-display font-bold text-display-lg lg:text-display-xl text-foreground italic">
-                {t.home.heroTitle1}
-                <br />
-                <span className="text-primary">{t.home.heroTitle2}</span>
-              </h1>
-              <p className="mt-8 text-body-lg text-muted-foreground max-w-xl leading-relaxed">
-                {t.home.heroDesc}
-              </p>
-              <div className="mt-10 flex flex-wrap gap-4 items-center">
+            <div className="max-w-5xl">
+              <div className="flex flex-col lg:flex-row items-center gap-6">
+                <div>
+                  <h2 className="font-serif font-extrabold text-3xl md:text-5xl lg:text-6xl leading-relaxed text-foreground mt-1">
+                    {t.home.heroHeadingLine1}
+                    <span className="block mt-3 md:mt-2 lg:mt-4">{t.home.heroHeadingLine2}</span>
+                  </h2>
+                  <p className="mt-2 text-xl italic text-primary">{t.home.heroTitle1} <span className="block">{t.home.heroTitle2}</span></p>
+                  <p className="mt-4 text-body-lg text-muted-foreground max-w-xl leading-relaxed">{t.home.heroDesc}</p>
+
+                  <div className="mt-6 flex flex-wrap gap-4 items-center">
                 <Link
                   to="/activities"
-                  className="inline-flex items-center justify-center w-56 whitespace-nowrap gap-2 py-3 rounded-full bg-primary text-primary-foreground font-medium text-body-md hover:opacity-90 transition-opacity"
+                  className="inline-flex items-center justify-center w-56 whitespace-nowrap gap-2 py-3 rounded-full bg-primary text-primary-foreground font-medium text-body-md hover:opacity-90 transition-opacity shadow-md"
                 >
                   {t.home.viewActivities}
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center w-56 whitespace-nowrap gap-2 py-3 rounded-full border-2 border-primary/60 text-foreground font-medium text-body-md hover:bg-primary/5 transition-colors"
+                  className="inline-flex items-center justify-center w-56 whitespace-nowrap gap-2 py-3 rounded-full border-2 border-primary/60 text-foreground font-medium text-body-md hover:bg-primary/5 transition-colors shadow-sm"
                 >
                   {t.home.contactUs}
                 </Link>
-                <a
-                  href="/Medicalform.pdf"
-                  download
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-[448px] whitespace-nowrap gap-2 py-3 rounded-full border-2 border-primary/60 text-foreground font-medium text-body-md hover:bg-primary/5 transition-colors"
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  {t.home.medicalReimbursementPdf}
-                </a>
+                  </div>
+
+                  <div className="mt-4">
+                    <a
+                      href="/Medicalform.pdf"
+                      download
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center w-[448px] whitespace-nowrap gap-2 py-3 rounded-full border-2 border-primary/60 text-foreground font-medium text-body-md hover:bg-primary/5 transition-colors shadow-sm"
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      {t.home.medicalReimbursementPdf}
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -15,6 +15,8 @@ export const translations = {
       tagline: 'All India Organization of Pensioners',
     },
     home: {
+      heroHeadingLine1: 'All India Organisation',
+      heroHeadingLine2: 'of Pensioners',
       heroTitle1: 'Honoring Experience,',
       heroTitle2: 'Supporting Your Journey.',
       heroDesc: 'We are dedicated to the welfare, dignity, and community of pensioners. Join us for support, connection, and assistance.',
@@ -125,6 +127,8 @@ export const translations = {
       tagline: 'ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स',
     },
     home: {
+      heroHeadingLine1: 'ऑल इंडिया ऑर्गनाइजेशन',
+      heroHeadingLine2: 'ऑफ पेंशनर्स',
       heroTitle1: 'अनुभव का सम्मान,',
       heroTitle2: 'आपकी यात्रा का साथ।',
       heroDesc: 'हम पेंशनर्स के कल्याण, सम्मान और सामुदायिक एकता के लिए समर्पित हैं। सहायता, जुड़ाव और समर्थन के लिए हमारे साथ जुड़ें।',
