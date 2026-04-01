@@ -28,6 +28,7 @@ export default function Navbar() {
   const isActive = (path: string) => location.pathname === path;
   const effectiveWidth = windowWidth / Math.max(fontScale, 1);
   const shouldUseDesktopNav = effectiveWidth >= 1260 && fontScale <= 1.05;
+  const phoneHref = `tel:${t.contact.phone.replace(/[^\d+]/g, '')}`;
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -141,13 +142,13 @@ export default function Navbar() {
                 </button>
             </div>
             {shouldUseDesktopNav ? (
-              <Link
-                to="/contact"
+              <a
+                href={phoneHref}
                 className="flex items-center gap-1.5 px-3.5 md:px-4 py-2.5 rounded-2xl bg-primary text-primary-foreground font-semibold text-xs md:text-sm hover:shadow-lg hover:bg-primary/90 transition-all shrink-0"
               >
                 <Phone className="w-4 h-4" />
                 <span>{t.nav.help}</span>
-              </Link>
+              </a>
             ) : (
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
@@ -181,14 +182,14 @@ export default function Navbar() {
                 </Link>
               ))}
             </div>
-            <Link
-              to="/contact"
+            <a
+              href={phoneHref}
               onClick={() => setMobileOpen(false)}
               className="mt-3 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
             >
               <Phone className="w-4 h-4" />
               <span>{t.nav.help}</span>
-            </Link>
+            </a>
           </div>
         )}
         </div>
