@@ -26,7 +26,8 @@ export default function Navbar() {
   ];
 
   const isActive = (path: string) => location.pathname === path;
-  const shouldUseDesktopNav = windowWidth >= 1280 && fontScale <= 1;
+  const effectiveWidth = windowWidth / Math.max(fontScale, 1);
+  const shouldUseDesktopNav = effectiveWidth >= 1260 && fontScale <= 1.05;
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -41,34 +42,54 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [location.pathname, shouldUseDesktopNav]);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [mobileOpen]);
+
   return (
-    <nav className="sticky top-0 z-50 bg-gradient-to-r from-background via-card to-background/80 backdrop-blur-md border-b border-primary/10 shadow-md">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-12">
-        <div className="flex items-center justify-between h-auto md:h-20 py-3 md:py-0 gap-3 md:gap-4 xl:gap-6">
+    <nav
+      className="fixed inset-x-0 top-0 z-50 bg-transparent"
+    >
+      <div className="mx-auto w-[min(96.5vw,1700px)] px-2 sm:px-4 md:px-5 lg:px-6 xl:px-8 pt-2 sm:pt-3">
+        <div className="rounded-2xl border border-slate-200/70 dark:border-white/25 bg-white/70 dark:bg-slate-900/45 text-slate-900 dark:text-white shadow-[0_10px_30px_rgba(8,7,35,0.16)] dark:shadow-[0_10px_30px_rgba(8,7,35,0.35)] backdrop-blur-2xl">
+          <div className="flex items-center justify-between py-2 sm:py-3 md:py-3.5 px-2 sm:px-4 md:px-5 gap-1 sm:gap-3 md:gap-4 xl:gap-6">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 min-w-0 flex-shrink-0">
+          <Link to="/" className="flex items-center gap-1.5 min-w-0 flex-shrink">
             <img
                 src={logo}
                 alt="AIOOP Logo"
-                className="h-14 md:h-16 w-auto"
+                className="h-10 sm:h-12 md:h-16 w-auto"
               />
-            <div className="hidden sm:block min-w-0">
-              <h1 className="font-display font-bold text-sm md:text-xl text-primary leading-tight truncate">{t.nav.orgName}</h1>
-              <p className="text-xs md:text-sm text-muted-foreground truncate">{t.nav.tagline}</p>
+            <div className="min-w-0 max-w-[8.5rem] sm:max-w-none">
+              <h1 className="font-display font-bold text-base sm:text-lg md:text-xl text-slate-900 dark:text-white leading-tight truncate">
+                {shouldUseDesktopNav ? t.nav.orgName : 'AIOOP'}
+              </h1>
+              <p className={`text-xs md:text-sm text-slate-600 dark:text-white/70 truncate ${shouldUseDesktopNav ? 'hidden lg:block' : 'hidden'}`}>
+                {t.nav.tagline}
+              </p>
             </div>
           </Link>
 
           {/* Desktop Nav */}
           {shouldUseDesktopNav && (
-            <div className="flex items-center gap-1">
+            <div className="flex-1 flex items-center justify-center gap-1">
               {links.map(link => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`px-4 py-2 rounded-lg text-body-md font-medium transition-colors ${
+                  className={`px-3 py-2 rounded-lg text-base md:text-[1.05rem] font-semibold transition-colors ${
                     isActive(link.to)
-                      ? 'bg-accent text-accent-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                      ? 'text-primary dark:text-lime-300'
+                      : 'text-slate-700 dark:text-white/80 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/10'
                   }`}
                 >
                   {link.label}
@@ -78,47 +99,51 @@ export default function Navbar() {
           )}
 
           {/* Right actions */}
-          <div className="ml-auto flex items-center gap-2 md:gap-3 shrink-0">
+          <div className="flex items-center gap-1 sm:gap-1.5 md:gap-3 shrink-0">
             {/* Accessibility controls group */}
-            <div className="flex items-center gap-1 px-1.5 sm:px-2 md:px-3 py-1.5 rounded-lg border border-primary/20 bg-muted/40 backdrop-blur-sm hover:bg-muted/60 transition-colors">
-              <button
-                onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
-                className="inline-flex items-center rounded overflow-hidden border border-primary/30 transition-colors hover:bg-muted/80"
-                aria-label="Toggle language"
-              >
-                <span className={`px-1 md:px-1.5 py-0.5 font-bold text-xs md:text-sm transition-colors ${language === 'en' ? 'bg-primary/20 text-primary font-semibold' : 'bg-transparent text-muted-foreground'}`}>
-                  A
-                </span>
-                <span className={`px-1 md:px-1.5 py-0.5 font-bold text-xs md:text-sm transition-colors ${language === 'hi' ? 'bg-primary text-primary-foreground font-semibold' : 'bg-transparent text-muted-foreground'}`}>
-                  अ
-                </span>
-              </button>
-              <button
-                onClick={increase}
-                className="p-1 md:p-1.5 rounded text-muted-foreground hover:text-primary hover:bg-muted/80 transition-colors font-medium"
-                aria-label="Increase font size"
-              >
-                <span className="text-xs block">A+</span>
-              </button>
-              <button
-                onClick={decrease}
-                className="p-1 md:p-1.5 rounded text-muted-foreground hover:text-primary hover:bg-muted/80 transition-colors font-medium"
-                aria-label="Decrease font size"
-              >
-                <span className="text-xs block">A-</span>
-              </button>
-              <button
-                onClick={toggleTheme}
-                className="p-1 md:p-1.5 rounded text-muted-foreground hover:text-primary hover:bg-muted/80 transition-colors"
-                aria-label="Toggle theme"
-              >
-                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </button>
+            <div
+              className={`flex items-center gap-1 rounded-xl border border-slate-300/70 dark:border-white/20 bg-white/60 dark:bg-white/10 backdrop-blur-sm hover:bg-white/75 dark:hover:bg-white/15 transition-colors ${
+                shouldUseDesktopNav ? 'px-2 sm:px-2.5 md:px-3 py-2' : 'px-1.5 py-1'
+              }`}
+            >
+                <button
+                  onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
+                  className="inline-flex items-center rounded overflow-hidden border border-slate-300/80 dark:border-white/20 transition-colors hover:bg-slate-900/5 dark:hover:bg-white/10"
+                  aria-label="Toggle language"
+                >
+                  <span className={`px-1 sm:px-1.5 py-0.5 font-bold text-sm transition-colors ${language === 'en' ? 'bg-slate-900/10 text-slate-900 dark:bg-white/20 dark:text-white' : 'bg-transparent text-slate-600 dark:text-white/70'}`}>
+                    A
+                  </span>
+                  <span className={`px-1 sm:px-1.5 py-0.5 font-bold text-sm transition-colors ${language === 'hi' ? 'bg-primary text-primary-foreground' : 'bg-transparent text-slate-600 dark:text-white/70'}`}>
+                    अ
+                  </span>
+                </button>
+                <button
+                  onClick={increase}
+                  className="p-1 sm:p-1.5 rounded text-slate-700 dark:text-white/75 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/10 transition-colors font-medium"
+                  aria-label="Increase font size"
+                >
+                  <span className="text-sm block">A+</span>
+                </button>
+                <button
+                  onClick={decrease}
+                  className="p-1 sm:p-1.5 rounded text-slate-700 dark:text-white/75 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/10 transition-colors font-medium"
+                  aria-label="Decrease font size"
+                >
+                  <span className="text-sm block">A-</span>
+                </button>
+                <button
+                  onClick={toggleTheme}
+                  className="p-1 sm:p-1.5 rounded text-slate-700 dark:text-white/75 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/10 transition-colors"
+                  aria-label="Toggle theme"
+                >
+                  {isDark ? <Sun className="w-4 h-4 sm:w-[18px] sm:h-[18px]" /> : <Moon className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />}
+                </button>
             </div>
             {shouldUseDesktopNav ? (
               <Link
                 to="/contact"
-                className="flex items-center gap-1 px-3 md:px-4 py-2 rounded-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-medium text-xs hover:shadow-lg hover:from-primary/90 hover:to-primary/70 transition-all shrink-0"
+                className="flex items-center gap-1.5 px-3.5 md:px-4 py-2.5 rounded-2xl bg-primary text-primary-foreground font-semibold text-xs md:text-sm hover:shadow-lg hover:bg-primary/90 transition-all shrink-0"
               >
                 <Phone className="w-4 h-4" />
                 <span>{t.nav.help}</span>
@@ -126,10 +151,12 @@ export default function Navbar() {
             ) : (
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted shrink-0"
+                className="p-1.5 sm:p-2 rounded-lg border border-slate-300/80 dark:border-white/20 text-slate-700 dark:text-white/85 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/10 shrink-0"
                 aria-label="Toggle menu"
+                aria-expanded={mobileOpen}
+                aria-controls="mobile-navigation-menu"
               >
-                {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {mobileOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
               </button>
             )}
           </div>
@@ -137,7 +164,7 @@ export default function Navbar() {
 
         {/* Mobile Nav */}
         {!shouldUseDesktopNav && mobileOpen && (
-          <div className="pb-6 border-t border-border pt-4">
+          <div id="mobile-navigation-menu" className="pb-4 sm:pb-5 px-3 sm:px-4 md:px-5 border-t border-slate-300/70 dark:border-white/15 pt-3 sm:pt-4">
             <div className="flex flex-col gap-1">
               {links.map(link => (
                 <Link
@@ -146,16 +173,25 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className={`px-4 py-3 rounded-lg text-body-md font-medium transition-colors ${
                     isActive(link.to)
-                      ? 'bg-accent text-accent-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                      ? 'bg-primary/15 text-primary dark:bg-white/20 dark:text-lime-300'
+                      : 'text-slate-700 dark:text-white/80 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/10'
                   }`}
                 >
                   {link.label}
                 </Link>
               ))}
             </div>
+            <Link
+              to="/contact"
+              onClick={() => setMobileOpen(false)}
+              className="mt-3 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
+            >
+              <Phone className="w-4 h-4" />
+              <span>{t.nav.help}</span>
+            </Link>
           </div>
         )}
+        </div>
       </div>
     </nav>
   );

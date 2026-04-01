@@ -28,9 +28,9 @@ export default function Index() {
     return (
       <div>
         {/* Hero */}
-        <section className="bg-gradient-to-br from-accent via-background to-accent/50 py-10 md:py-24 lg:py-32">
+        <section className="min-h-screen flex items-center bg-gradient-to-br from-accent via-background to-accent/50 pt-32 pb-16 sm:pt-36 sm:pb-20 md:pt-40 md:pb-24 lg:pt-44 lg:pb-24">
           <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-12">
-              <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.75fr)] lg:gap-14">
+              <div className="grid items-center gap-8 xl:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.75fr)] xl:gap-14">
               <div className="w-full max-w-2xl md:max-w-3xl">
                   {showNoticeCue && (
                     <Link
@@ -119,7 +119,7 @@ export default function Index() {
                     <h3 className="mt-2 font-display text-lg font-bold leading-tight text-foreground sm:mt-3 sm:text-xl md:text-2xl">
                       {magazineCopy.title}
                     </h3>
-                    <div className="mt-4 flex flex-col gap-2.5 sm:mt-5 sm:flex-row sm:gap-3">
+                    <div className="mt-4 flex flex-col gap-2.5 sm:mt-5 md:flex-row sm:gap-3">
                       <a
                         href="/E_Magazine_25_26.pdf"
                         target="_blank"

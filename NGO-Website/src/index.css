@@ -7,7 +7,13 @@ html {
 
 html, body {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
+}
+
+@media (max-width: 1024px) {
+  html, body {
+    overflow-x: auto;
+  }
 }
 
 @tailwind base;
