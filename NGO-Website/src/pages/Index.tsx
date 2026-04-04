@@ -4,7 +4,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 
 export default function Index() {
   const { t, language } = useLanguage();
-  const noticeCueUntil = new Date('2026-03-29T10:00:00+05:30');
+  const noticeCueUntil = new Date('2026-04-11T11:30:00+05:30');
   const showNoticeCue = new Date() < noticeCueUntil;
   const magazineCopy =
     language === 'hi'
@@ -40,8 +40,8 @@ export default function Index() {
                       <BellRing className="h-3.5 w-3.5 shrink-0" />
                       <span>
                         {language === 'hi'
-                          ? 'कार्य समिति की नई बैठक सूचना उपलब्ध है'
-                          : 'New executive committee meeting notice is available'}
+                          ? 'छात्रवृत्ति वितरण कार्यक्रम की नई सूचना उपलब्ध है'
+                          : 'New scholarship distribution notice is available'}
                       </span>
                     </Link>
                   )}

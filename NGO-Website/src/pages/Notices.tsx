@@ -31,6 +31,38 @@ type Notice = {
 
 const noticesData: Notice[] = [
   {
+    day: '11',
+    month: 'APR',
+    year: '2026',
+    type: 'Scholarship Program',
+    title: 'Scholarship Distribution Program for Needy and Meritorious Students',
+    titleHi: 'गरीब एवं मेधावी विद्यार्थियों के लिए छात्रवृत्ति वितरण कार्यक्रम',
+    intro:
+      'Please be informed that the previously postponed scholarship distribution program for needy and meritorious students, organized by All India Organization of Pensioners, Kanpur, has now been scheduled.',
+    introHi:
+      'कृपया अवगत कराना है कि आल इन्डिया आर्गनाइजेशन आफ पेन्शनर्स कानपुर की तरफ से गरीब एवं मेधावी विद्यार्थियों को पूर्व में स्थगित छात्रवृत्ति वितरण कार्यक्रम अब आयोजित किया गया है।',
+    dateLabel: 'Date',
+    dateLabelHi: 'दिनांक',
+    dateValue: 'Saturday, April 11, 2026',
+    dateValueHi: '11/04/2026, शनिवार',
+    timeLabel: 'Time',
+    timeLabelHi: 'समय',
+    timeValue: '11:30 AM',
+    timeValueHi: 'पूर्वाह्न 11:30 बजे',
+    venueLabel: 'Venue',
+    venueLabelHi: 'स्थान',
+    venueValue:
+      'Omkareshwar Saraswati Vidya Niketan Inter College, near Punjab National Bank, Jawahar Nagar, Kanpur',
+    venueValueHi:
+      'ओंकारेश्वर सरस्वती विद्या निकेतन इंटर कॉलेज, पंजाब नेशनल बैंक के निकट, जवाहर नगर, कानपुर',
+    request:
+      'All office bearers and executive committee members are requested to be present at the program on time. Please do not wait for a separate personal intimation.',
+    requestHi:
+      'आप सभी से अनुरोध है कि सभी पदाधिकारी एवं कार्यकारिणी सदस्य समय से कार्यक्रम में अवश्य उपस्थित रहने का कष्ट करें। कृपया निवेदन है कि व्यक्तिगत रूप से अलग से सूचना की प्रतीक्षा न करें।',
+    signatory: 'O. P. Srivastava, General Secretary',
+    signatoryHi: 'ओ. पी. श्रीवास्तव, महासचिव',
+  },
+  {
     day: '29',
     month: 'MAR',
     year: '2026',
