@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { X, ChevronLeft, ChevronRight, Images, CalendarDays } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { X, ChevronLeft, ChevronRight, Images, CalendarDays, Play } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
-import PageHeader from '@/components/PageHeader';
 
 // ── Ganga Mela 2026 ──────────────────────────────────────────────────────────
 import gm1 from '@/assets/Ganga-Mela 2026/1.png';
@@ -16,6 +15,13 @@ import em1 from '@/assets/exec-meeting-29-03-26/1.png';
 import em2 from '@/assets/exec-meeting-29-03-26/2.png';
 import em3 from '@/assets/exec-meeting-29-03-26/3.png';
 import em4 from '@/assets/exec-meeting-29-03-26/4.png';
+
+// ── Scholarship Distribution Program ─────────────────────────────────────────
+import sd1 from '@/assets/scholarship-10-04-2026/1.png';
+import sd2 from '@/assets/scholarship-10-04-2026/2.png';
+
+const scholarshipVideoUrl = 'https://www.youtube.com/embed/eNyHc6Bo8PU?rel=0&playsinline=1';
+const scholarshipVideoThumb = 'https://img.youtube.com/vi/eNyHc6Bo8PU/hqdefault.jpg';
 
 const gangaMelaPhotos = [
   { src: gm1, captionEn: 'Shri Rakesh Sachan – Cabinet Minister, Dept. of MSME, Govt. of U.P.', captionHi: 'माननीय श्री राकेश सचान – कैबिनेट मिनिस्टर, सूक्ष्म लघु एवं मध्यम उद्यम विभाग, उ.प्र. सरकार' },
@@ -33,8 +39,15 @@ const execMeetingPhotos = [
   { src: em4, captionEn: 'Executive Committee Meeting – AIOOP Kanpur, 29 March 2026', captionHi: 'ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स, कानपुर – कार्य समिति बैठक, 29 मार्च 2026' },
 ];
 
+const scholarshipPhotos = [
+  { src: sd1, captionEn: 'Scholarship distribution ceremony with students and guests on stage', captionHi: 'मंच पर विद्यार्थियों एवं अतिथियों के साथ छात्रवृत्ति वितरण समारोह' },
+  { src: sd2, captionEn: 'Student receiving scholarship cheque during the program', captionHi: 'कार्यक्रम के दौरान छात्रा को छात्रवृत्ति चेक प्रदान करते हुए' },
+];
+
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface Photo { src: string; captionEn: string; captionHi: string; }
+type GalleryId = 'ganga-mela' | 'exec-meeting' | 'scholarship-distribution';
+type SortOrder = 'desc' | 'asc';
 
 interface GalleryDialogProps {
   isOpen: boolean;
@@ -46,17 +59,28 @@ interface GalleryDialogProps {
   dateEn: string;
   dateHi: string;
   photos: Photo[];
+  videoUrl?: string;
+  videoTitleEn?: string;
+  videoTitleHi?: string;
   language: string;
 }
 
 // ── Lightbox + Dialog ─────────────────────────────────────────────────────────
 function GalleryDialog({
-  isOpen, onClose, titleEn, titleHi, descEn, descHi, dateEn, dateHi, photos, language,
+  isOpen, onClose, titleEn, titleHi, descEn, descHi, dateEn, dateHi, photos, videoUrl, videoTitleEn, videoTitleHi, language,
 }: GalleryDialogProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [playVideo, setPlayVideo] = useState(false);
 
   const caption = (p: Photo) => language === 'hi' ? p.captionHi : p.captionEn;
   const title   = language === 'hi' ? titleHi : titleEn;
+
+  useEffect(() => {
+    if (!isOpen) {
+      setLightboxIndex(null);
+      setPlayVideo(false);
+    }
+  }, [isOpen]);
 
   const prev = () => setLightboxIndex(i => i === null ? null : (i - 1 + photos.length) % photos.length);
   const next = () => setLightboxIndex(i => i === null ? null : (i + 1) % photos.length);
@@ -173,30 +197,69 @@ function GalleryDialog({
 
         {/* Photo grid */}
         <div className="overflow-y-auto p-4 sm:p-5" role="list" aria-label="Gallery photos">
-          <div className="grid grid-cols-2 gap-2.5 xs:grid-cols-2 sm:grid-cols-3">
-            {photos.map((photo, i) => (
-              <button
-                key={i}
-                onClick={() => setLightboxIndex(i)}
-                aria-label={`View photo: ${caption(photo)}`}
-                role="listitem"
-                className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-border/40 bg-muted/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-              >
-                <img
-                  src={photo.src}
-                  alt={caption(photo)}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                {/* Always-visible subtle label on mobile, hover on desktop */}
-                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-black/5 to-transparent sm:opacity-0 sm:transition-opacity sm:duration-200 sm:group-hover:opacity-100">
-                  <p className="w-full px-2 pb-2 text-center text-[10px] font-medium leading-tight text-white line-clamp-2 sm:text-[11px]">
-                    {caption(photo)}
-                  </p>
+          <div className="space-y-4">
+            {videoUrl && (
+              <div className="overflow-hidden rounded-2xl border border-border/50 bg-muted/20">
+                <div className="aspect-video w-full">
+                  {playVideo ? (
+                    <iframe
+                      src={videoUrl}
+                      title={language === 'hi' ? (videoTitleHi ?? titleHi) : (videoTitleEn ?? titleEn)}
+                      className="h-full w-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setPlayVideo(true)}
+                      className="group relative block h-full w-full overflow-hidden"
+                      aria-label={language === 'hi' ? 'वीडियो चलाएं' : 'Play video'}
+                    >
+                      <img
+                        src={scholarshipVideoThumb}
+                        alt={language === 'hi' ? 'कार्यक्रम वीडियो थंबनेल' : 'Program video thumbnail'}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/35 transition-colors group-hover:bg-black/25" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/92 text-primary shadow-lg">
+                          <Play className="ml-1 h-7 w-7 fill-current" />
+                        </span>
+                      </div>
+                    </button>
+                  )}
                 </div>
-              </button>
-            ))}
+              </div>
+            )}
+
+            {photos.length > 0 && (
+              <div className="grid grid-cols-2 gap-2.5 xs:grid-cols-2 sm:grid-cols-3">
+                {photos.map((photo, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setLightboxIndex(i)}
+                    aria-label={`View photo: ${caption(photo)}`}
+                    role="listitem"
+                    className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-border/40 bg-muted/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  >
+                    <img
+                      src={photo.src}
+                      alt={caption(photo)}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-black/5 to-transparent sm:opacity-0 sm:transition-opacity sm:duration-200 sm:group-hover:opacity-100">
+                      <p className="w-full px-2 pb-2 text-center text-[10px] font-medium leading-tight text-white line-clamp-2 sm:text-[11px]">
+                        {caption(photo)}
+                      </p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -216,16 +279,37 @@ interface TileProps {
   descEn: string;
   descHi: string;
   count: number;
+  countLabelEn?: string;
+  countLabelHi?: string;
   coverImages: string[];
   onClick: () => void;
   language: string;
 }
 
-function GalleryTile({ icon: Icon, badgeEn, badgeHi, titleEn, titleHi, dateEn, dateHi, descEn, descHi, count, coverImages, onClick, language }: TileProps) {
+interface GalleryItem {
+  id: GalleryId;
+  icon: React.ElementType;
+  badgeEn: string;
+  badgeHi: string;
+  titleEn: string;
+  titleHi: string;
+  dateEn: string;
+  dateHi: string;
+  descEn: string;
+  descHi: string;
+  count: number;
+  countLabelEn?: string;
+  countLabelHi?: string;
+  coverImages: string[];
+  sortDate: string;
+}
+
+function GalleryTile({ icon: Icon, badgeEn, badgeHi, titleEn, titleHi, dateEn, dateHi, descEn, descHi, count, countLabelEn, countLabelHi, coverImages, onClick, language }: TileProps) {
   const badge = language === 'hi' ? badgeHi : badgeEn;
   const title = language === 'hi' ? titleHi : titleEn;
   const date  = language === 'hi' ? dateHi  : dateEn;
   const desc  = language === 'hi' ? descHi  : descEn;
+  const countLabel = language === 'hi' ? (countLabelHi ?? 'फ़ोटो') : (countLabelEn ?? 'Photos');
 
   return (
     <button
@@ -234,19 +318,33 @@ function GalleryTile({ icon: Icon, badgeEn, badgeHi, titleEn, titleHi, dateEn, d
     >
       {/* 2×2 photo collage */}
       <div className="relative mb-4 w-full overflow-hidden rounded-xl border-2 border-primary/25 aspect-video">
-        <div className="grid h-full grid-cols-2 grid-rows-2 gap-0.5">
-          {coverImages.slice(0, 4).map((src, i) => (
-            <div key={i} className="relative overflow-hidden">
-              <img src={src} alt="" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-            </div>
-          ))}
-        </div>
+        {coverImages.length === 1 ? (
+          <div className="h-full w-full">
+            <img src={coverImages[0]} alt="" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          </div>
+        ) : coverImages.length === 2 ? (
+          <div className="grid h-full grid-cols-2 gap-0.5">
+            {coverImages.map((src, i) => (
+              <div key={i} className="relative h-full overflow-hidden">
+                <img src={src} alt="" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid h-full grid-cols-2 grid-rows-2 gap-0.5">
+            {coverImages.slice(0, 4).map((src, i) => (
+              <div key={i} className="relative overflow-hidden">
+                <img src={src} alt="" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              </div>
+            ))}
+          </div>
+        )}
         {/* shimmer overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-50 pointer-events-none" />
         {/* photo count badge */}
         <div className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
           <Images className="h-3 w-3" />
-          {count} {language === 'hi' ? 'फ़ोटो' : 'Photos'}
+          {count} {countLabel}
         </div>
       </div>
 
@@ -277,50 +375,115 @@ function GalleryTile({ icon: Icon, badgeEn, badgeHi, titleEn, titleHi, dateEn, d
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default function Gallery() {
   const { t, language } = useLanguage();
-  const [openGallery, setOpenGallery] = useState<'ganga-mela' | 'exec-meeting' | null>(null);
+  const [openGallery, setOpenGallery] = useState<GalleryId | null>(null);
+  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
 
   const gangaCovers = gangaMelaPhotos.slice(0, 4).map(p => p.src);
   const execCovers  = execMeetingPhotos.slice(0, 4).map(p => p.src);
+  const scholarshipCovers = scholarshipPhotos.map(p => p.src);
+  const galleryItems: GalleryItem[] = [
+    {
+      id: 'ganga-mela',
+      icon: CalendarDays,
+      badgeEn: 'Event',
+      badgeHi: 'कार्यक्रम',
+      titleEn: 'Holi Ganga Mela 2026',
+      titleHi: 'होली गंगा मेला 2026',
+      dateEn: '10 March 2026',
+      dateHi: '10 मार्च 2026',
+      descEn: 'Ganga Mela festival at Sarsaiya Ghat, Kanpur. AIOOP hosted a Holi Milan Camp and welcomed public representatives and respected citizens.',
+      descHi: 'सरसैया घाट, कानपुर में आयोजित गंगा मेला महोत्सव। AIOOP के होली मिलन कैंप में जनप्रतिनिधियों एवं सम्मानित नागरिकों का स्वागत किया गया।',
+      count: gangaMelaPhotos.length,
+      coverImages: gangaCovers,
+      sortDate: '2026-03-10',
+    },
+    {
+      id: 'exec-meeting',
+      icon: Images,
+      badgeEn: 'Meeting',
+      badgeHi: 'बैठक',
+      titleEn: 'Executive Committee Meeting',
+      titleHi: 'कार्य समिति की बैठक',
+      dateEn: '29 March 2026',
+      dateHi: '29 मार्च 2026',
+      descEn: 'Executive Committee Meeting of the All India Organization of Pensioners, Kanpur, held on Sunday, 29 March 2026.',
+      descHi: 'ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स, कानपुर की कार्य समिति की बैठक, दिनांक 29 मार्च 2026, दिन रविवार।',
+      count: execMeetingPhotos.length,
+      coverImages: execCovers,
+      sortDate: '2026-03-29',
+    },
+    {
+      id: 'scholarship-distribution',
+      icon: CalendarDays,
+      badgeEn: 'Scholarship',
+      badgeHi: 'छात्रवृत्ति',
+      titleEn: 'Scholarship Distribution Program',
+      titleHi: 'छात्रवृत्ति वितरण कार्यक्रम',
+      dateEn: '10 April 2026',
+      dateHi: '10 अप्रैल 2026',
+      descEn: 'AIOOP Kanpur organized a scholarship distribution program at Omkareshwar Saraswati Vidya Niketan Inter College, Jawahar Nagar, where 28 students received scholarships worth Rs. 1,65,000 by cheque.',
+      descHi: 'ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स, कानपुर द्वारा ओंकारेश्वर सरस्वती विद्या निकेतन इंटर कॉलेज, जवाहर नगर में छात्रवृत्ति वितरण कार्यक्रम आयोजित किया गया, जिसमें 28 छात्र-छात्राओं को कुल 1,65,000 रुपये की छात्रवृत्ति चेक के माध्यम से प्रदान की गई।',
+      count: scholarshipPhotos.length,
+      coverImages: scholarshipCovers,
+      sortDate: '2026-04-10',
+    },
+  ];
+
+  const sortedGalleryItems = [...galleryItems].sort((a, b) => {
+    const aTime = new Date(a.sortDate).getTime();
+    const bTime = new Date(b.sortDate).getTime();
+    return sortOrder === 'desc' ? bTime - aTime : aTime - bTime;
+  });
 
   return (
     <>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-12 py-20">
-        <PageHeader title={t.gallery.title} description={t.gallery.desc} />
+        <div className="mb-2 md:mb-4 lg:mb-6 pt-28 pb-10 md:pt-32 md:pb-14 lg:pt-36 lg:pb-16">
+          <div className="flex items-start justify-between gap-3 sm:gap-4">
+            <h1 className="min-w-0 pr-2 font-display text-3xl font-bold text-foreground md:text-4xl lg:text-display-lg xl:text-display-xl">
+              {t.gallery.title}
+            </h1>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:gap-8 max-w-3xl">
-          {/* Tile 1 — Holi Ganga Mela 2026 */}
-          <GalleryTile
-            icon={CalendarDays}
-            badgeEn="Event"
-            badgeHi="कार्यक्रम"
-            titleEn="Holi Ganga Mela 2026"
-            titleHi="होली गंगा मेला 2026"
-            dateEn="10 March 2026"
-            dateHi="10 मार्च 2026"
-            descEn="Ganga Mela festival at Sarsaiya Ghat, Kanpur. AIOOP hosted a Holi Milan Camp and welcomed public representatives and respected citizens."
-            descHi="सरसैया घाट, कानपुर में आयोजित गंगा मेला महोत्सव। AIOOP के होली मिलन कैंप में जनप्रतिनिधियों एवं सम्मानित नागरिकों का स्वागत किया गया।"
-            count={gangaMelaPhotos.length}
-            coverImages={gangaCovers}
-            onClick={() => setOpenGallery('ganga-mela')}
-            language={language}
-          />
+            <button
+              type="button"
+              onClick={() => setSortOrder(current => current === 'desc' ? 'asc' : 'desc')}
+              className="shrink-0 rounded-full border border-primary/20 bg-card px-3 py-2 text-xs font-semibold text-foreground shadow-sm transition hover:border-primary/40 hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:px-4 sm:text-sm"
+              aria-label={language === 'hi' ? 'तारीख के अनुसार क्रम बदलें' : 'Toggle sort by date'}
+            >
+              {language === 'hi'
+                ? (sortOrder === 'desc' ? 'दिखाया जा रहा है: नवीनतम पहले' : 'दिखाया जा रहा है: पुरानी पहले')
+                : (sortOrder === 'desc' ? 'Showing: Newest first' : 'Showing: Oldest first')}
+            </button>
+          </div>
 
-          {/* Tile 2 — Executive Committee Meeting */}
-          <GalleryTile
-            icon={Images}
-            badgeEn="Meeting"
-            badgeHi="बैठक"
-            titleEn="Executive Committee Meeting"
-            titleHi="कार्य समिति की बैठक"
-            dateEn="29 March 2026"
-            dateHi="29 मार्च 2026"
-            descEn="Executive Committee Meeting of the All India Organization of Pensioners, Kanpur, held on Sunday, 29 March 2026."
-            descHi="ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स, कानपुर की कार्य समिति की बैठक, दिनांक 29 मार्च 2026, दिन रविवार।"
-            count={execMeetingPhotos.length}
-            coverImages={execCovers}
-            onClick={() => setOpenGallery('exec-meeting')}
-            language={language}
-          />
+          <div className="mt-6 md:mt-8">
+            <p className="max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg lg:text-body-lg">
+              {t.gallery.desc}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 xl:max-w-none xl:grid-cols-3 lg:gap-8">
+          {sortedGalleryItems.map((item) => (
+            <GalleryTile
+              key={item.id}
+              icon={item.icon}
+              badgeEn={item.badgeEn}
+              badgeHi={item.badgeHi}
+              titleEn={item.titleEn}
+              titleHi={item.titleHi}
+              dateEn={item.dateEn}
+              dateHi={item.dateHi}
+              descEn={item.descEn}
+              descHi={item.descHi}
+              count={item.count}
+              countLabelEn={item.countLabelEn}
+              countLabelHi={item.countLabelHi}
+              coverImages={item.coverImages}
+              onClick={() => setOpenGallery(item.id)}
+              language={language}
+            />
+          ))}
         </div>
       </div>
 
@@ -349,6 +512,22 @@ export default function Gallery() {
         descEn="Executive Committee Meeting of the All India Organization of Pensioners, Kanpur, held on Sunday, 29 March 2026."
         descHi="दिनांक 29/03/2026 दिन रविवार को आयोजित ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स, कानपुर की कार्य समिति की बैठक।"
         photos={execMeetingPhotos}
+        language={language}
+      />
+
+      <GalleryDialog
+        isOpen={openGallery === 'scholarship-distribution'}
+        onClose={() => setOpenGallery(null)}
+        titleEn="Scholarship Distribution Program – 10 April 2026"
+        titleHi="छात्रवृत्ति वितरण कार्यक्रम – 10 अप्रैल 2026"
+        dateEn="10 April 2026 · Jawahar Nagar, Kanpur"
+        dateHi="10 अप्रैल 2026 · जवाहर नगर, कानपुर"
+        descEn="AIOOP Kanpur organized the scholarship distribution program at Omkareshwar Saraswati Vidya Niketan Inter College, Jawahar Nagar. Scholarships worth Rs. 1,65,000 were distributed by cheque to 28 economically weaker and meritorious students. The ceremony was conducted by Mahasachiv O.P. Srivastava and chaired by retired IPS officer Ratan Kumar Srivastava, with office bearers, executive members and school dignitaries in attendance."
+        descHi="ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स, कानपुर द्वारा ओंकारेश्वर सरस्वती विद्या निकेतन इंटर कॉलेज, जवाहर नगर में छात्रवृत्ति वितरण कार्यक्रम आयोजित किया गया। आर्थिक रूप से कमजोर एवं मेधावी 28 छात्र-छात्राओं को कुल 1,65,000 रुपये की छात्रवृत्ति चेक के माध्यम से प्रदान की गई। कार्यक्रम का संचालन महासचिव ओ.पी. श्रीवास्तव ने किया तथा अध्यक्षता सेवानिवृत्त आई.पी.एस. रतन कुमार श्रीवास्तव ने की। कार्यक्रम में संगठन के पदाधिकारी, कार्यकारिणी सदस्य और विद्यालय के गणमान्य अतिथि उपस्थित रहे।"
+        photos={scholarshipPhotos}
+        videoUrl={scholarshipVideoUrl}
+        videoTitleEn="Scholarship Distribution Program Video"
+        videoTitleHi="छात्रवृत्ति वितरण कार्यक्रम वीडियो"
         language={language}
       />
     </>
