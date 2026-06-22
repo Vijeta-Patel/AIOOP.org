@@ -20,8 +20,14 @@ import em4 from '@/assets/exec-meeting-29-03-26/4.png';
 import sd1 from '@/assets/scholarship-10-04-2026/1.png';
 import sd2 from '@/assets/scholarship-10-04-2026/2.png';
 
+// ── International Yoga Day 2026 ──────────────────────────────────────────────
+import yogaDay1 from '@/assets/yoga_day_2026/yogaday.jpeg';
+import yogaDay2 from '@/assets/yoga_day_2026/doingyoga.jpeg';
+
 const scholarshipVideoUrl = 'https://www.youtube.com/embed/eNyHc6Bo8PU?rel=0&playsinline=1';
 const scholarshipVideoThumb = 'https://img.youtube.com/vi/eNyHc6Bo8PU/hqdefault.jpg';
+const yogaDayVideoUrl = 'https://www.youtube.com/embed/zZ9lb-YAeVo?rel=0&playsinline=1';
+const yogaDayVideoThumb = 'https://img.youtube.com/vi/zZ9lb-YAeVo/hqdefault.jpg';
 
 const gangaMelaPhotos = [
   { src: gm1, captionEn: 'Shri Rakesh Sachan – Cabinet Minister, Dept. of MSME, Govt. of U.P.', captionHi: 'माननीय श्री राकेश सचान – कैबिनेट मिनिस्टर, सूक्ष्म लघु एवं मध्यम उद्यम विभाग, उ.प्र. सरकार' },
@@ -44,9 +50,14 @@ const scholarshipPhotos = [
   { src: sd2, captionEn: 'Student receiving scholarship cheque during the program', captionHi: 'कार्यक्रम के दौरान छात्रा को छात्रवृत्ति चेक प्रदान करते हुए' },
 ];
 
+const yogaDayPhotos = [
+  { src: yogaDay1, captionEn: 'International Yoga Day program organized by AIOOP Kanpur', captionHi: 'AIOOP कानपुर द्वारा आयोजित अंतरराष्ट्रीय योग दिवस कार्यक्रम' },
+  { src: yogaDay2, captionEn: 'Participants practicing yoga during the International Yoga Day program', captionHi: 'अंतरराष्ट्रीय योग दिवस कार्यक्रम में योग करते हुए प्रतिभागी' },
+];
+
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface Photo { src: string; captionEn: string; captionHi: string; }
-type GalleryId = 'ganga-mela' | 'exec-meeting' | 'scholarship-distribution';
+type GalleryId = 'ganga-mela' | 'exec-meeting' | 'scholarship-distribution' | 'yoga-day-2026';
 type SortOrder = 'desc' | 'asc';
 
 interface GalleryDialogProps {
@@ -60,6 +71,7 @@ interface GalleryDialogProps {
   dateHi: string;
   photos: Photo[];
   videoUrl?: string;
+  videoThumb?: string;
   videoTitleEn?: string;
   videoTitleHi?: string;
   language: string;
@@ -67,7 +79,7 @@ interface GalleryDialogProps {
 
 // ── Lightbox + Dialog ─────────────────────────────────────────────────────────
 function GalleryDialog({
-  isOpen, onClose, titleEn, titleHi, descEn, descHi, dateEn, dateHi, photos, videoUrl, videoTitleEn, videoTitleHi, language,
+  isOpen, onClose, titleEn, titleHi, descEn, descHi, dateEn, dateHi, photos, videoUrl, videoThumb, videoTitleEn, videoTitleHi, language,
 }: GalleryDialogProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [playVideo, setPlayVideo] = useState(false);
@@ -218,7 +230,7 @@ function GalleryDialog({
                       aria-label={language === 'hi' ? 'वीडियो चलाएं' : 'Play video'}
                     >
                       <img
-                        src={scholarshipVideoThumb}
+                        src={videoThumb ?? scholarshipVideoThumb}
                         alt={language === 'hi' ? 'कार्यक्रम वीडियो थंबनेल' : 'Program video thumbnail'}
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
@@ -381,7 +393,23 @@ export default function Gallery() {
   const gangaCovers = gangaMelaPhotos.slice(0, 4).map(p => p.src);
   const execCovers  = execMeetingPhotos.slice(0, 4).map(p => p.src);
   const scholarshipCovers = scholarshipPhotos.map(p => p.src);
+  const yogaDayCovers = yogaDayPhotos.map(p => p.src);
   const galleryItems: GalleryItem[] = [
+    {
+      id: 'yoga-day-2026',
+      icon: CalendarDays,
+      badgeEn: 'Yoga Day',
+      badgeHi: 'योग दिवस',
+      titleEn: 'International Yoga Day Program',
+      titleHi: 'अंतरराष्ट्रीय योग दिवस कार्यक्रम',
+      dateEn: '21 June 2026',
+      dateHi: '21 जून 2026',
+      descEn: 'AIOOP Kanpur organized an International Yoga Day program with Saraswati Vandana, lamp lighting, floral tribute and a group yoga session attended by office bearers, school staff, students and respected citizens.',
+      descHi: 'ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स, कानपुर द्वारा अंतरराष्ट्रीय योग दिवस कार्यक्रम आयोजित किया गया, जिसमें सरस्वती वंदना, दीप प्रज्वलन, पुष्प अर्पण और सामूहिक योग किया गया।',
+      count: yogaDayPhotos.length,
+      coverImages: yogaDayCovers,
+      sortDate: '2026-06-21',
+    },
     {
       id: 'ganga-mela',
       icon: CalendarDays,
@@ -463,27 +491,29 @@ export default function Gallery() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 xl:max-w-none xl:grid-cols-3 lg:gap-8">
-          {sortedGalleryItems.map((item) => (
-            <GalleryTile
-              key={item.id}
-              icon={item.icon}
-              badgeEn={item.badgeEn}
-              badgeHi={item.badgeHi}
-              titleEn={item.titleEn}
-              titleHi={item.titleHi}
-              dateEn={item.dateEn}
-              dateHi={item.dateHi}
-              descEn={item.descEn}
-              descHi={item.descHi}
-              count={item.count}
-              countLabelEn={item.countLabelEn}
-              countLabelHi={item.countLabelHi}
-              coverImages={item.coverImages}
-              onClick={() => setOpenGallery(item.id)}
-              language={language}
-            />
-          ))}
+        <div className="mt-8 max-h-[calc(100vh-24rem)] min-h-[26rem] overflow-y-auto pr-1 sm:pr-2">
+          <div className="grid gap-6 sm:grid-cols-2 xl:max-w-none xl:grid-cols-3 lg:gap-8">
+            {sortedGalleryItems.map((item) => (
+              <GalleryTile
+                key={item.id}
+                icon={item.icon}
+                badgeEn={item.badgeEn}
+                badgeHi={item.badgeHi}
+                titleEn={item.titleEn}
+                titleHi={item.titleHi}
+                dateEn={item.dateEn}
+                dateHi={item.dateHi}
+                descEn={item.descEn}
+                descHi={item.descHi}
+                count={item.count}
+                countLabelEn={item.countLabelEn}
+                countLabelHi={item.countLabelHi}
+                coverImages={item.coverImages}
+                onClick={() => setOpenGallery(item.id)}
+                language={language}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -526,8 +556,26 @@ export default function Gallery() {
         descHi="ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स, कानपुर द्वारा ओंकारेश्वर सरस्वती विद्या निकेतन इंटर कॉलेज, जवाहर नगर में छात्रवृत्ति वितरण कार्यक्रम आयोजित किया गया। आर्थिक रूप से कमजोर एवं मेधावी 28 छात्र-छात्राओं को कुल 1,65,000 रुपये की छात्रवृत्ति चेक के माध्यम से प्रदान की गई। कार्यक्रम का संचालन महासचिव ओ.पी. श्रीवास्तव ने किया तथा अध्यक्षता सेवानिवृत्त आई.पी.एस. रतन कुमार श्रीवास्तव ने की। कार्यक्रम में संगठन के पदाधिकारी, कार्यकारिणी सदस्य और विद्यालय के गणमान्य अतिथि उपस्थित रहे।"
         photos={scholarshipPhotos}
         videoUrl={scholarshipVideoUrl}
+        videoThumb={scholarshipVideoThumb}
         videoTitleEn="Scholarship Distribution Program Video"
         videoTitleHi="छात्रवृत्ति वितरण कार्यक्रम वीडियो"
+        language={language}
+      />
+
+      <GalleryDialog
+        isOpen={openGallery === 'yoga-day-2026'}
+        onClose={() => setOpenGallery(null)}
+        titleEn="International Yoga Day Program – 21 June 2026"
+        titleHi="अंतरराष्ट्रीय योग दिवस कार्यक्रम – 21 जून 2026"
+        dateEn="21 June 2026 · AIOOP, Kanpur"
+        dateHi="21 जून 2026 · ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स, कानपुर"
+        descEn="On Sunday, 21 June 2026, the All India Organization of Pensioners, Kanpur organized an International Yoga Day program. The program began with Saraswati Vandana, lighting of the lamp and offering flowers at Maa Saraswati's feet. Office bearers and executive members of the organization, along with the school principal, teachers, students and many respected citizens, participated in yoga. AIOOP Kanpur thanked everyone who attended the program and prayed to God for their long life and good health. O.P. Srivastava, General Secretary."
+        descHi="आज दिनांक 21 जून 2026 दिन रविवार को ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स, कानपुर द्वारा अंतरराष्ट्रीय योग दिवस कार्यक्रम आयोजित किया गया। कार्यक्रम का शुभारंभ माँ सरस्वती की वंदना के साथ दीप प्रज्वलित कर एवं माँ सरस्वती के चरणों में पुष्प अर्पित कर किया गया। इस अवसर पर संगठन के पदाधिकारी/कार्यकारिणी सदस्यों सहित विद्यालय के प्रधानाचार्य/अध्यापक-अध्यापिकायें एवं छात्र/छात्राओं सहित बड़ी संख्या में प्रबुद्ध जनों द्वारा योग किया गया। ऑल इंडिया ऑर्गनाइजेशन ऑफ पेंशनर्स, कानपुर द्वारा अंतरराष्ट्रीय योग दिवस कार्यक्रम में आये सभी लोगों के ईश्वर से दीर्घायु और स्वस्थ होने की कामना के साथ धन्यवाद किया गया। ओ.पी. श्रीवास्तव, महासचिव।"
+        photos={yogaDayPhotos}
+        videoUrl={yogaDayVideoUrl}
+        videoThumb={yogaDayVideoThumb}
+        videoTitleEn="International Yoga Day Program Video"
+        videoTitleHi="अंतरराष्ट्रीय योग दिवस कार्यक्रम वीडियो"
         language={language}
       />
     </>
